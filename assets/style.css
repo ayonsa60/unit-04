@@ -1,0 +1,21 @@
+h1 {
+    text-align: center;
+    justify-content: center;
+    flex-direction: center;
+
+}
+
+body {
+    text-align: center;
+justify-content: center;
+flex-direction: center;
+background-color: gray;
+}
+button {
+    padding: 25px;
+    margin: 25px;
+    box-shadow: 2px 2px 2px black;
+    border-radius: 5px;
+    font-size: 50px;
+    font-family: cursive;
+}
