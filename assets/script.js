@@ -5,25 +5,27 @@
 // when all the questions are answered the timer reaches zero then the game is over
 // i can then save my initials and my score
 
-var timer;
+var time = startTime;
 
 function startTime() {
-    timer = setInterval(startTime, 300000);
+    time = setInterval(startTime, 300000);
 
 
-    document.getElementById('bttn').innerHTML
+    var countDownEl = document.getElementById('countDown');
 }
 document.getElementById('bttn').addEventListener('click', startTime);
 
 
-var question = []; {
+var questions = []; {
     question[0] = "Which of the following is a correct variable value?";
     question[1] = "What is an array?";
     question[2] = "Which of the following is the correct wat to name a variable?";
     question[3] = "What is the right way to write an array?";
     question[4] = "Which operator is used to assign a value to a variable?";
-    }
+}
+for( i = 0; i < questions.length; i++) {
 
+}
 
 
 
