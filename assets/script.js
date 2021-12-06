@@ -42,10 +42,18 @@ var quizQuestions = [
 ]
 function startQuiz() {
     var startQuiz = document.getElementById('quiz-page');
-    startQuiz.setAttribute("class", "hide");
+    startQuiz.setAttribute("id", "hide");
 
+    quizPage.removeAttribute("id");
     // timer code block
     time = setInterval(startTime, 300000);
+
+    getquizQuestions();
+}
+function getquizQuestions() {
+    var currentQuestion = questions[currentQuestionIndex];
+
+    
 }
 
 
