@@ -4,11 +4,12 @@
 // when a question is answered incorrectly time is subtracted from the clock
 // when all the questions are answered the timer reaches zero then the game is over
 // i can then save my initials and my score
-
+var currentQuestionIndex = [];
 // DOM variables
 var homePage = document.getElementById("home-page");
 var quizPage = document.getElementById("quiz-page");
 var lastPage = document.getElementById("last-page");
+var optionsEL = document.getElementById(quizQuestions.question)
 
 var quizQuestions = [
     {
@@ -53,7 +54,23 @@ function startQuiz() {
 function getquizQuestions() {
     var currentQuestion = questions[currentQuestionIndex];
 
-    
+    var questions = document.getElementById('question');
+    questions.textContent = currentQuestion.question;
+
+    optionsEL.innerHTML = '';
+
+    currentQuestion.options.forEach(function(options, i) {
+
+        var optionsBranch = document.createElement('button');
+        optionsBranch.setAttribute("id", "options");
+        optionBranch.setAttribute("value", options);
+
+        optionsBranch.textContent = i + 1 + "." + options;
+
+        optionsBranch.onclick = questionClick;
+
+        optionsEL.appendChild(optionsBranch);
+    });
 }
 
 
