@@ -4,12 +4,16 @@
 // when a question is answered incorrectly time is subtracted from the clock
 // when all the questions are answered the timer reaches zero then the game is over
 // i can then save my initials and my score
-var currentQuestionIndex = [];
+var currentQuestionIndex = 0;
+var time;
 // DOM variables
-var homePage = document.getElementById("home-page");
-var quizPage = document.getElementById("quiz-page");
-var lastPage = document.getElementById("last-page");
-var optionsEL = document.getElementById(quizQuestions.question)
+var homePage = document.getElementById("homePage");
+var questions = document.getElementById("questions");
+var optionsEl = document.getElementById("options")
+var lastPage = document.getElementById("lastPage");
+var startButton = document.getElementById("startButton");
+var submitButton = document.getElementById("submit");
+var optionsEL = document.getElementById("quizQuestions.options");
 
 var quizQuestions = [
     {
@@ -40,74 +44,72 @@ var quizQuestions = [
         options: [ "=", ":", "()", ";"],
         answer: "="
     }
-]
+];
+
+
 function startQuiz() {
-    var startQuiz = document.getElementById('quiz-page');
-    startQuiz.setAttribute("id", "hide");
+    // hide homePage
+    var startQuizEl = document.getElementById("homePage");
+    startQuizEl.setAttribute("class", "hide");
 
-    quizPage.removeAttribute("id");
+    // reveal questions
+    questions.removeAttribute("class");
     // timer code block
-    time = setInterval(clockTick, 300000);
+    time = setInterval(timerCountdown, 300000);
 
-    getquizQuestions();
+    getQuizQuestions();
 }
-function getquizQuestions() {
-    var currentQuestion = questions[currentQuestionIndex];
+function getQuizQuestions() {
+    var currentQuestion = quizQuestions[currentQuestionIndex];
 
-    var questions = document.getElementById('question');
-    questions.textContent = currentQuestion.question;
+    var questions = document.getElementById("questions");
+    questions.textContent = currentQuestion.quizQuestion;
 
-    optionsEL.innerHTML = '';
+    optionsEl.innerHTML = "";
 
     currentQuestion.options.forEach(function(options, i) {
 
-        var optionsBranch = document.createElement('button');
-        optionsBranch.setAttribute("id", "options");
-        optionBranch.setAttribute("value", options);
+        var optionsBranch = document.createElement("button");
+        optionsBranch.setAttribute("class", "options");
+        optionsBranch.setAttribute("value", options);
 
         optionsBranch.textContent = i + 1 + "." + options;
 
         optionsBranch.onclick = questionsClick;
 
-        optionsEL.appendChild(optionsBranch);
+        optionsEl.appendChild(optionsBranch);
     });
 }
 function questionsClick() {
-    if(this.value === questions[currentQuestionIndex].answer) {
-        console.log("Your answer is Correct!")
-    } else {
+    if (this.value !== quizQuestions[currentQuestionIndex].answer) {
         console.log("Your selected answer is incorrect. Please try again")
+    } else {
+        console.log("Your answer is Correct!")
     }
 
     currentQuestionIndex++;
 
-    if(currentQuestionIndex === question.lenght) {
+    if (currentQuestionIndex === questions.length) {
         finishedQuiz();
     } else {
-        getquizQuestions();
+        getQuizQuestions();
     }
 }
 function finishedQuiz() {
-    
+    clearInterval(time);
+
+    var lastPage = document.getElementById("lastPage");
+    lastPage.removeAttribute("class");
+
+    quizQuestions.setAttribute("class", "hide");
+
+}
+function timerCountdown() {
+    time--;
+    time.textContent = time;
+    if(timerCountdown === 0) {
+        finishedQuiz();
+    }
 }
 
-
-
-
-//     var countDownEl = document.getElementById('countDown');
-// }
-// document.getElementById('bttn').addEventListener('click', startTime);
-
-
-
-// for( i = 0; i < questions.length; i++) {
-
-// }
-
-// // <!-- <script> -->
-// document.getElementById("bttn").addEventListener("click", function() {
-//     document.getElementById("demo").innerHTML = -->
-//   });
-//   </script>
-// function startTime() {
-    // time = setInterval(startTime, 300000);
+startButton.onclick = startQuiz;
