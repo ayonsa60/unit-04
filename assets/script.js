@@ -47,7 +47,7 @@ function startQuiz() {
 
     quizPage.removeAttribute("id");
     // timer code block
-    time = setInterval(startTime, 300000);
+    time = setInterval(clockTick, 300000);
 
     getquizQuestions();
 }
@@ -67,12 +67,29 @@ function getquizQuestions() {
 
         optionsBranch.textContent = i + 1 + "." + options;
 
-        optionsBranch.onclick = questionClick;
+        optionsBranch.onclick = questionsClick;
 
         optionsEL.appendChild(optionsBranch);
     });
 }
+function questionsClick() {
+    if(this.value === questions[currentQuestionIndex].answer) {
+        console.log("Your answer is Correct!")
+    } else {
+        console.log("Your selected answer is incorrect. Please try again")
+    }
 
+    currentQuestionIndex++;
+
+    if(currentQuestionIndex === question.lenght) {
+        finishedQuiz();
+    } else {
+        getquizQuestions();
+    }
+}
+function finishedQuiz() {
+    
+}
 
 
 
