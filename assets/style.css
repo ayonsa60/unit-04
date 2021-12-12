@@ -2,9 +2,10 @@ h1 {
     text-align: center;
     justify-content: center;
     flex-direction: center;
-
 }
-
+.hide {
+    display: none;
+}
 body {
     text-align: center;
 justify-content: center;

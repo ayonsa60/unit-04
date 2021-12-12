@@ -4,17 +4,8 @@
 // when a question is answered incorrectly time is subtracted from the clock
 // when all the questions are answered the timer reaches zero then the game is over
 // i can then save my initials and my score
-var currentQuestionIndex = 0;
-var time;
-// DOM variables
-var homePage = document.getElementById("homePage");
-var questions = document.getElementById("questions");
-var optionsEl = document.getElementById("options")
-var lastPage = document.getElementById("lastPage");
-var startButton = document.getElementById("startButton");
-var submitButton = document.getElementById("submit");
-var optionsEL = document.getElementById("quizQuestions.options");
-
+// create a h2 and render question
+// 
 var quizQuestions = [
     {
         question: "Which of the following is a correct variable value?",
@@ -45,71 +36,46 @@ var quizQuestions = [
         answer: "="
     }
 ];
+let startButton = document.getElementById('startButton');
+let timer = document.getElementById('time');
+let question = document.getElementById('question');
+let stopTimerId;
+let timerLength = 60;
+let currentIndex = 0;
+
+const beginQuiz = () => {
+    stopTimerId = setInterval(timerFunction, 1000)
+    timer.textContent = 'Time: ' + timerLength;
 
 
-function startQuiz() {
-    // hide homePage
-    var startQuizEl = document.getElementById("homePage");
-    startQuizEl.setAttribute("class", "hide");
-
-    // reveal questions
-    questions.removeAttribute("class");
-    // timer code block
-    time = setInterval(timerCountdown, 300000);
-
-    getQuizQuestions();
 }
-function getQuizQuestions() {
-    var currentQuestion = quizQuestions[currentQuestionIndex];
-
-    var questions = document.getElementById("questions");
-    questions.textContent = currentQuestion.quizQuestion;
-
-    optionsEl.innerHTML = "";
-
-    currentQuestion.options.forEach(function(options, i) {
-
-        var optionsBranch = document.createElement("button");
-        optionsBranch.setAttribute("class", "options");
-        optionsBranch.setAttribute("value", options);
-
-        optionsBranch.textContent = i + 1 + "." + options;
-
-        optionsBranch.onclick = questionsClick;
-
-        optionsEl.appendChild(optionsBranch);
-    });
+const timerFunction = () => {
+    timerLength--;
+    timer.textContent = 'Time:' + timerLength;
 }
-function questionsClick() {
-    if (this.value !== quizQuestions[currentQuestionIndex].answer) {
-        console.log("Your selected answer is incorrect. Please try again")
-    } else {
-        console.log("Your answer is Correct!")
-    }
+const displayQuestion = () => {
+    let h2 = document.createElement('h2');
+    let currentQuestion = quizQuestions[currentIndex].question;
+    h2.textContent = currentQuestion;
 
-    currentQuestionIndex++;
-
-    if (currentQuestionIndex === questions.length) {
-        finishedQuiz();
-    } else {
-        getQuizQuestions();
+    let questionTitle = document.getElementById('questionTitle');
+    questionTitle.append(h2);
+    
+    let options = quizQuestions[currentIndex].options;
+    for(var i = 0; i < options.length; i++){
+        optionsButton = document.createElement('button');
+        let questionOptions = document.getElementById('questionOptions');
+        questionOptions.append(optionsButton);
+        
+        optionsButton.textContent = options[i];
     }
 }
-function finishedQuiz() {
-    clearInterval(time);
-
-    var lastPage = document.getElementById("lastPage");
-    lastPage.removeAttribute("class");
-
-    quizQuestions.setAttribute("class", "hide");
-
-}
-function timerCountdown() {
-    time--;
-    time.textContent = time;
-    if(timerCountdown === 0) {
-        finishedQuiz();
-    }
+function validateAnswer(){
+    currentIndex++;
 }
 
-startButton.onclick = startQuiz;
+startButton.addEventListener('click', function(){
+    beginQuiz();
+    displayQuestion();
+    startButton.setAttribute('class', 'hide');
+});

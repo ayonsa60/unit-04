@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div id="time">Time: 5:00</div>
+    <div id="time">Time: </div>
     
     <div class="wrapper">
             <div id="homePage" class="start"></div>
@@ -18,9 +18,13 @@
             <button id="startButton">Start Quiz</button>
     </div>
 
-    <div id="quizQuestions" class="hide">
-        <h2 id="questions"></h2>
-        <div id="options" class="options"></div>
+    <div id="answerAlert" class="hide">
+            
+    </div>
+
+    <div id="quizQuestions" >
+        <div id="questionTitle"></div>
+        <div id="questionOptions"></div>
     </div>
 
     <div id="lastPage" class="hide">
@@ -28,6 +32,7 @@
         <p>Your final score: </p>
         <p>Save your score: <input type="text" id="initials"/></p>
         <button id="submit"></button>
+
     </div>
     
     <script src="script.js"></script>
