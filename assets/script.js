@@ -43,6 +43,7 @@ let timer = document.getElementById('time');
 let question = document.getElementById('question');
 let questionOptions = document.getElementById('questionOptions');
 let answerAlert = document.getElementById('answerAlert');
+
 // quiz status variables
 let stopTimerId;
 let timerLength = 60;
@@ -54,13 +55,18 @@ const beginQuiz = () => {
     // renders timer to the user
     timer.textContent = 'Time: ' + timerLength;
 
+    // hide homepage when start button is clicked
+    let homePage = document.getElementById('homePage');
+    homePage.setAttribute('class', 'hide');
+
 
 }
 const timerFunction = () => {
     timerLength--;
     timer.textContent = 'Time:' + timerLength;
 }
-const displayQuestion = () => {
+function displayQuestion() {
+    // renders next question
     let h2 = document.createElement('h2');
     // retrieves current question from questions array                          
     let currentQuestion = quizQuestions[currentIndex].question;
@@ -70,8 +76,9 @@ const displayQuestion = () => {
     let questionTitle = document.getElementById('questionTitle');
     questionTitle.append(h2);
 
-    // clears previous question
-    questionOptions.innerHTML = '';
+    // clears previous question and options
+    // questionTitle.innerHTML = "";
+    questionOptions.innerHTML = "";
     
     // loops over options
     let options = quizQuestions[currentIndex].options;
@@ -90,9 +97,11 @@ function validateAnswer(){
     // checks user answer choice
     if(this.value !== quizQuestions[currentIndex].answer) {
         answerAlert.textContent = "Your Answer is Incorrect";
+        timer -= 5;
     } else {
         answerAlert.textContent = "Your Answer is Correct!";
     }
+    answerAlert.removeAttribute('class');
     currentIndex++;
 
     // conditional statement that cycles all the questions
@@ -103,7 +112,18 @@ function validateAnswer(){
     }
 }
 function endQuiz() {
-    
+    let endQuiz = document.getElementById('lastPage');
+
+    // hides questions div and displays lastPage div
+    endQuiz.removeAttribute('class');
+
+    clearInterval(stopTimerId);
+}
+function saveScores() {
+    let playerInitials = initials.value();
+}
+function renderScores() {
+    var quizScores = JSON.parse
 }
 
 startButton.addEventListener('click', function(){
