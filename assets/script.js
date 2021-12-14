@@ -5,7 +5,8 @@
 // when all the questions are answered the timer reaches zero then the game is over
 // i can then save my initials and my score
 // create a h2 and render question
-// 
+
+//list array of questions, options and answers 
 var quizQuestions = [
     {
         question: "Which of the following is a correct variable value?",
@@ -36,15 +37,21 @@ var quizQuestions = [
         answer: "="
     }
 ];
+// variable reference to DOM elements
 let startButton = document.getElementById('startButton');
 let timer = document.getElementById('time');
 let question = document.getElementById('question');
+let questionOptions = document.getElementById('questionOptions');
+let answerAlert = document.getElementById('answerAlert');
+// quiz status variables
 let stopTimerId;
 let timerLength = 60;
 let currentIndex = 0;
 
 const beginQuiz = () => {
+    // starts timer
     stopTimerId = setInterval(timerFunction, 1000)
+    // renders timer to the user
     timer.textContent = 'Time: ' + timerLength;
 
 
@@ -55,23 +62,48 @@ const timerFunction = () => {
 }
 const displayQuestion = () => {
     let h2 = document.createElement('h2');
+    // retrieves current question from questions array                          
     let currentQuestion = quizQuestions[currentIndex].question;
     h2.textContent = currentQuestion;
 
+    // renders current question
     let questionTitle = document.getElementById('questionTitle');
     questionTitle.append(h2);
+
+    // clears previous question
+    questionOptions.innerHTML = '';
     
+    // loops over options
     let options = quizQuestions[currentIndex].options;
     for(var i = 0; i < options.length; i++){
+        // creates a button for each option
         optionsButton = document.createElement('button');
         let questionOptions = document.getElementById('questionOptions');
         questionOptions.append(optionsButton);
         
         optionsButton.textContent = options[i];
+
+        questionOptions.onclick = validateAnswer;
     }
 }
 function validateAnswer(){
+    // checks user answer choice
+    if(this.value !== quizQuestions[currentIndex].answer) {
+        answerAlert.textContent = "Your Answer is Incorrect";
+    } else {
+        answerAlert.textContent = "Your Answer is Correct!";
+    }
     currentIndex++;
+
+    // conditional statement that cycles all the questions
+    if(currentIndex === questionOptions.length) {
+        endQuiz();
+    } else {
+        displayQuestion();
+    }
+}
+function endQuiz() {
+    
 }
 
 startButton.addEventListener('click', function(){
