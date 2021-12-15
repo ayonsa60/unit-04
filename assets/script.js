@@ -70,14 +70,15 @@ function displayQuestion() {
     let h2 = document.createElement('h2');
     // retrieves current question from questions array                          
     let currentQuestion = quizQuestions[currentIndex].question;
+    
     h2.textContent = currentQuestion;
 
     // renders current question
     let questionTitle = document.getElementById('questionTitle');
+    questionTitle.innerHTML = '';
     questionTitle.append(h2);
 
     // clears previous question and options
-    // questionTitle.innerHTML = "";
     questionOptions.innerHTML = "";
     
     // loops over options
